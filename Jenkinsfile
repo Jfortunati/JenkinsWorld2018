@@ -106,6 +106,7 @@ pipeline {
     stage('Monitor') {
       steps {
         bat(returnStdout: true, script: '.\\alertsite.bat')
+        echo 'test'
       }
     }
   }
