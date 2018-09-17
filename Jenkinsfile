@@ -42,7 +42,6 @@ pipeline {
         waitUntil() {
           bat 'collaborator'
         }
-
       }
     }
     stage('Load Testing') {
@@ -58,6 +57,7 @@ pipeline {
           }
         }
       }
+	 }
     stage('Deploy') {
       parallel {
         stage('Deploy') {
