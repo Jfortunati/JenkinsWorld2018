@@ -7,9 +7,18 @@ pipeline {
 
   }
   stages {
-    stage('Virtual Services') {
-      steps {
-        build 'deploy'
+    stage('Build & Setup') {
+      parallel {
+        stage('Send to Staging') {
+          steps {
+            bat 'depoloy_script'
+          }
+        }
+        stage('Start Virtual Services') {
+          steps {
+            bat 'alert_site.bat'
+          }
+        }
       }
     }
     stage('Regression') {
@@ -66,12 +75,27 @@ pipeline {
     }
     stage('Deploy') {
       parallel {
-        stage('Deploy') {
+	    stage('Stop Virtual Services') {
+          steps {
+            bat 'depoloy_script'
+          }
+        }
+        stage('Merge PR') {
           steps {
             bat 'depoloy_script'
           }
         }
         stage('Update Swagger Spec') {
+          steps {
+            bat 'swagger_spec.bat'
+          }
+        }
+        stage('Update Jira') {
+          steps {
+            bat 'swagger_spec.bat'
+          }
+        }
+		stage('Send to Prod') {
           steps {
             bat 'swagger_spec.bat'
           }
