@@ -23,10 +23,7 @@ pipeline {
     }
     stage('Unit Tests') {
       steps {
-        waitUntil() {
-          bat(returnStdout: true, script: '.\\unit-tests.bat')
-        }
-
+        bat(script: '.\\unit-tests.bat', returnStdout: true)
       }
     }
     stage('Regression') {
@@ -55,10 +52,7 @@ pipeline {
     }
     stage('Peer Review') {
       steps {
-        waitUntil() {
-          bat(returnStdout: true, script: '.\\collaborator.bat')
-        }
-
+        bat(script: '.\\collaborator.bat', returnStdout: true)
       }
     }
     stage('Scalability Testing') {
