@@ -21,6 +21,13 @@ pipeline {
         }
       }
     }
+	stage('Unit Tests') {
+      steps {
+        waitUntil() {
+          bat 'collaborator'
+        }
+      }
+    }
     stage('Regression') {
       parallel {
         stage('SoapUI Tests') {
@@ -51,7 +58,6 @@ pipeline {
         waitUntil() {
           bat 'collaborator'
         }
-
       }
     }
     stage('Scalability Testing') {
