@@ -30,7 +30,7 @@ pipeline {
       parallel {
         stage('SoapUI Tests') {
           steps {
-            SoapUIPro(pathToTestrunner: 'C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\SmartBear\\Ready! API TestServer 2.0.0', pathToProjectFile: '.\\readapi', testSuite: 'Build - Tester', testCase: 'Advanced assertion and data drive')
+            bat(returnStdout: true, script: '.\\test-complete.bat')
           }
         }
         stage('TestComplete Tests') {
