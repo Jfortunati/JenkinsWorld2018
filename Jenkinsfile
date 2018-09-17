@@ -4,7 +4,6 @@ pipeline {
       customWorkspace 'C:\\Jenkins-Workspaces\\jenkins-world-2018'
       label 'ESXI-AL-CI'
     }
-
   }
   stages {
     stage('Build & Setup') {
