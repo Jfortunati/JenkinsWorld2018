@@ -26,28 +26,37 @@ pipeline {
         bat(script: '.\\unit-tests.bat', returnStdout: true)
       }
     }
-    stage('Regression') {
+    stage('API') {
       parallel {
         stage('SoapUI Tests') {
           steps {
             bat(returnStdout: true, script: '.\\test-complete.bat')
           }
         }
-        stage('TestComplete Tests') {
+        stage('SecureV Tests') {
           steps {
             bat(returnStdout: true, script: '.\\test-complete.bat')
           }
         }
-        stage('Legacy Selenium') {
+      }
+    }
+    stage('End to End') {
+      parallel {
+        stage('TestComplete Automation') {
+          steps {
+            bat(returnStdout: true, script: '.\\test-complete.bat')
+          }
+        }
+        stage('CrossBrowserTesting & Selenium') {
+          steps {
+            bat(returnStdout: true, script: '.\\test-complete.bat')
+          }
+        }
+        stage('Update Hiptest BDD Scenarios') {
           steps {
             bat(returnStdout: true, script: '.\\selenium.bat')
           }
         }
-      }
-    }
-    stage('BDD Scenarios') {
-      steps {
-        bat(returnStdout: true, script: '.\\bdd.bat')
       }
     }
     stage('Peer Review') {
@@ -97,6 +106,11 @@ pipeline {
           }
         }
         stage('Send to Prod') {
+          steps {
+            bat(returnStdout: true, script: '.\\prod.bat')
+          }
+        }
+		stage('Announce Successful Deployment to Slack') {
           steps {
             bat(returnStdout: true, script: '.\\prod.bat')
           }
