@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="aa0b3142-efa6-4625-ac63-fffb09bf6dc3" created="2.4.0" activeEnvironment="Default environment" name="Build - Tester" resourceRoot="" updated="2.4.0 2018-06-08T12:50:23Z" encryptionMode="Not encrypted" xmlns:con="http://eviware.com/soapui/config">
+  <con:settings/>
+  <con:interface xsi:type="con:RestService" id="726c6892-52d3-4d3f-bc4f-868ac3c4f99e" wadlVersion="http://wadl.dev.java.net/2009/02" name="http://api.openweathermap.org" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:settings/>
+    <con:definitionCache type="TEXT" rootPart=""/>
+    <con:endpoints>
+      <con:endpoint>http://api.openweathermap.org</con:endpoint>
+    </con:endpoints>
+    <con:resource name="Weather" path="/data/2.5/weather" id="36c7278a-ef5c-4382-af21-48891f73b22c">
+      <con:settings/>
+      <con:parameters>
+        <con:parameter required="true">
+          <con:name>q</con:name>
+          <con:value>Boston</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>Boston</con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+        <con:parameter required="true">
+          <con:name>APPID</con:name>
+          <con:value>7c702abab2f602b694d6d4067f789af5</con:value>
+          <con:style>QUERY</con:style>
+          <con:default>7c702abab2f602b694d6d4067f789af5</con:default>
+          <con:path xsi:nil="true"/>
+          <con:description xsi:nil="true"/>
+        </con:parameter>
+      </con:parameters>
+      <con:method name="Weather" id="6efa5eb4-5dcd-40ac-bb9d-cde35c12853b" method="GET">
+        <con:settings/>
+        <con:parameters/>
+        <con:representation type="RESPONSE">
+          <con:mediaType>application/json; charset=utf-8</con:mediaType>
+          <con:status>200</con:status>
+          <con:params/>
+          <con:element xmlns:weat="http://api.openweathermap.org/data/2.5/weather">weat:Response</con:element>
+        </con:representation>
+        <con:representation type="FAULT">
+          <con:mediaType>application/json; charset=utf-8</con:mediaType>
+          <con:status>404 400</con:status>
+          <con:params/>
+          <con:element xmlns:weat="http://api.openweathermap.org/data/2.5/weather">weat:Fault</con:element>
+        </con:representation>
+        <con:request name="Request 1" id="888fa951-8ed3-4dc7-a6ff-a84fe52f80b9" mediaType="application/json">
+          <con:settings/>
+          <con:endpoint>http://api.openweathermap.org</con:endpoint>
+          <con:request/>
+          <con:credentials>
+            <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+            <con:authType>No Authorization</con:authType>
+          </con:credentials>
+          <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+          <con:parameters>
+            <con:entry key="q" value="Boston"/>
+            <con:entry key="APPID" value="7c702abab2f602b694d6d4067f789af5"/>
+          </con:parameters>
+          <con:parameterOrder>
+            <con:entry>q</con:entry>
+            <con:entry>APPID</con:entry>
+          </con:parameterOrder>
+        </con:request>
+      </con:method>
+    </con:resource>
+  </con:interface>
+  <con:testSuite id="483458dc-14f8-4bc5-85f8-5a41ce686199" name="Build - Tester">
+    <con:settings/>
+    <con:savedRecentRuns>1</con:savedRecentRuns>
+    <con:runType>SEQUENTIAL</con:runType>
+    <con:testCase id="ef1b3d40-1b2e-4cb2-8a4f-50f8242b05fe" discardOkResults="false" failOnError="true" failTestCaseOnErrors="true" keepSession="false" name="Advanced assertion and data drive" searchProperties="true" timeout="0">
+      <con:settings/>
+      <con:savedRecentRuns>1</con:savedRecentRuns>
+      <con:testStep type="datasource" name="City Name" id="39e18af8-5d5a-40f5-b409-6db509f7c6b0">
+        <con:settings/>
+        <con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:dataSource type="Excel">
+            <con:configuration>
+              <file>C:/Users/jonathan.fortunati/OneDrive - SmartBear Software, Inc/Gartner 2018/data_for_weather_by_city.xlsx</file>
+              <worksheet>Sheet1</worksheet>
+              <cell>A2</cell>
+              <ignoreEmpty>false</ignoreEmpty>
+              <evaluateFormulas>false</evaluateFormulas>
+            </con:configuration>
+          </con:dataSource>
+          <con:shared>true</con:shared>
+          <con:restartShared>true</con:restartShared>
+          <con:property>Location</con:property>
+          <con:completeLastOperation>true</con:completeLastOperation>
+          <con:restartOnRun>true</con:restartOnRun>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="restrequest" name="Weather - Request 1" id="c151e573-de42-468f-b192-a0664456eced">
+        <con:settings/>
+        <con:config service="http://api.openweathermap.org" resourcePath="/data/2.5/weather" methodName="Weather" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <con:restRequest name="Weather - Request 1" id="888fa951-8ed3-4dc7-a6ff-a84fe52f80b9" mediaType="application/json">
+            <con:settings>
+              <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+            </con:settings>
+            <con:endpoint>http://api.openweathermap.org</con:endpoint>
+            <con:request/>
+            <con:originalUri>http://api.openweathermap.org/data/2.5/weather</con:originalUri>
+            <con:assertion type="MessageContentAssertion" id="e869a99d-ff60-4743-b4f6-8a2854bbe2ff" name="Message Content Assertion">
+              <con:configuration xsi:type="con:MessageContentAssertion">
+                <con:elements>
+                  <con:xpath>declare namespace ns1='http://api.openweathermap.org/data/2.5/weather';
+//ns1:Response[1]/ns1:main[1]/ns1:temp_min[1]</con:xpath>
+                  <con:element>temp_min</con:element>
+                  <con:type xsi:nil="true"/>
+                  <con:operator>&lt;</con:operator>
+                  <con:enabled>true</con:enabled>
+                  <con:expectedValue>275</con:expectedValue>
+                  <con:hasValue>false</con:hasValue>
+                  <con:numberType>true</con:numberType>
+                </con:elements>
+                <con:elements>
+                  <con:xpath>declare namespace ns1='http://api.openweathermap.org/data/2.5/weather';
+//ns1:Response[1]/ns1:main[1]/ns1:temp_max[1]</con:xpath>
+                  <con:element>temp_max</con:element>
+                  <con:type xsi:nil="true"/>
+                  <con:operator>></con:operator>
+                  <con:enabled>true</con:enabled>
+                  <con:expectedValue>315</con:expectedValue>
+                  <con:hasValue>false</con:hasValue>
+                  <con:numberType>true</con:numberType>
+                </con:elements>
+                <con:originalMessage><![CDATA[<Response xmlns="http://api.openweathermap.org/data/2.5/weather">
+   <coord>
+      <lon>-71.06</lon>
+      <lat>42.36</lat>
+   </coord>
+   <weather>
+      <e>
+         <id>804</id>
+         <main>Clouds</main>
+         <description>overcast clouds</description>
+         <icon>04d</icon>
+      </e>
+   </weather>
+   <base>stations</base>
+   <main>
+      <temp>295.99</temp>
+      <pressure>1016</pressure>
+      <humidity>47</humidity>
+      <temp_min>294.15</temp_min>
+      <temp_max>298.15</temp_max>
+   </main>
+   <visibility>16093</visibility>
+   <wind>
+      <speed>7.2</speed>
+      <deg>200</deg>
+   </wind>
+   <clouds>
+      <all>90</all>
+   </clouds>
+   <dt>1530132960</dt>
+   <sys>
+      <type>1</type>
+      <id>1274</id>
+      <message>0.0049</message>
+      <country>US</country>
+      <sunrise>1530090584</sunrise>
+      <sunset>1530145510</sunset>
+   </sys>
+   <id>4930956</id>
+   <name>Boston</name>
+   <cod>200</cod>
+</Response>]]></con:originalMessage>
+              </con:configuration>
+            </con:assertion>
+            <con:assertion type="JsonPath Match" id="756c5fea-c0b7-47fa-ae5d-6e641beca6de" name="Match content of [description]">
+              <con:configuration>
+                <path>$['weather'][0]['description']</path>
+                <content>clear sky</content>
+                <allowWildcards>false</allowWildcards>
+                <ignoreNamspaceDifferences>false</ignoreNamspaceDifferences>
+                <ignoreComments>false</ignoreComments>
+              </con:configuration>
+            </con:assertion>
+            <con:credentials>
+              <con:selectedAuthProfile>No Authorization</con:selectedAuthProfile>
+              <con:authType>No Authorization</con:authType>
+            </con:credentials>
+            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+            <con:parameters>
+              <con:entry key="q" value="${City Name#Location}"/>
+              <con:entry key="APPID" value="7c702abab2f602b694d6d4067f789af5"/>
+            </con:parameters>
+            <con:parameterOrder>
+              <con:entry>q</con:entry>
+              <con:entry>APPID</con:entry>
+            </con:parameterOrder>
+          </con:restRequest>
+        </con:config>
+      </con:testStep>
+      <con:testStep type="datasourceloop" name="DataSource Loop" id="68e04245-1f0a-427f-85c4-fd929a9332ff">
+        <con:settings/>
+        <con:config>
+          <dataSourceStep>City Name</dataSourceStep>
+          <targetStep>Weather - Request 1</targetStep>
+          <discardResults>false</discardResults>
+        </con:config>
+      </con:testStep>
+      <con:properties/>
+      <con:reportParameters/>
+      <con:breakPoints>
+        <con:testStepId>39e18af8-5d5a-40f5-b409-6db509f7c6b0</con:testStepId>
+        <con:status>NONE</con:status>
+        <con:properties/>
+      </con:breakPoints>
+    </con:testCase>
+    <con:properties/>
+    <con:reportParameters/>
+  </con:testSuite>
+  <con:savedRecentRuns>1</con:savedRecentRuns>
+  <con:requirements/>
+  <con:properties/>
+  <con:wssContainer/>
+  <con:databaseConnectionContainer/>
+  <con:jmsConnectionContainer/>
+  <con:oAuth2ProfileContainer/>
+  <con:oAuth1ProfileContainer/>
+  <con:reporting>
+    <con:reportTemplates/>
+    <con:xmlTemplates/>
+    <con:xmlTemplates/>
+    <con:parameters/>
+    <con:parameters/>
+  </con:reporting>
+  <con:reporting/>
+  <con:eventHandlers type="RequestFilter.filterRequest" name="RequestFilter.filterRequest">
+    <con:script>// Sample event script to add custom HTTP header to all outgoing REST, SOAP and HTTP(S) calls
+// This code is often used for adding custom authentication to SoapUI Pro tests
+
+// If hardcoding the token, uncomment and change line 5
+// def token = '4567'
+
+// If your token is parameterized in Project level custom property, uncomment line 8
+// def token = request.parent.testCase.testSuite.project.getProperty('auth_token').getValue()
+
+// To modify all outgoing calls, remove comments from lines 11 to 16
+// def headers = request.requestHeaders
+// if (headers.containsKey('auth_token2') == false) {
+//   headers.put('auth_token2', token)
+//   request.requestHeaders = headers
+// }</con:script>
+  </con:eventHandlers>
+  <con:eventHandlers type="TestRunListener.afterStep" name="TestRunListener.afterStep">
+    <con:script>// Save all test step results into files
+// Change the directory path in line 5 to a location where you want to store details
+// then uncomment lines 5 to 10
+
+// filePath = 'C:\\tempOutputDirectory\\'
+// fos = new FileOutputStream(filePath + testStepResult.testStep.label + '.txt', true)
+// pw = new PrintWriter(fos)
+// testStepResult.writeTo(pw)
+// pw.close()
+// fos.close()</con:script>
+  </con:eventHandlers>
+  <con:authRepository/>
+  <con:loadUiTest name="Load Test 1" id="eb842586-71fc-40a5-aa17-6ab6c13f5a8b">
+    <con:settings>
+      <con:setting id="soapUIObjectSourceId">ef1b3d40-1b2e-4cb2-8a4f-50f8242b05fe</con:setting>
+      <con:setting id="soapUIObjectSourceType">soapUIObjectSourceType_TestCase</con:setting>
+    </con:settings>
+    <con1:loadui-project id="d7a7c5fa-7604-4183-8f55-25aa6b47f26b" label="Load Test 1" xmlns:con1="http://eviware.com/loadui/config">
+      <con1:properties>
+        <con1:property propagates="true" key="ModelItem.description" type="java.lang.String"/>
+        <con1:property propagates="true" key="CanvasItem.abortOnFinish" type="java.lang.Boolean">false</con1:property>
+        <con1:property propagates="true" key="ModelItem.saveReport" type="java.lang.Boolean">false</con1:property>
+        <con1:property propagates="true" key="ModelItem.reportFolder" type="java.lang.String"/>
+        <con1:property propagates="true" key="ModelItem.reportFormat" type="java.lang.String"/>
+        <con1:property propagates="true" key="Temporary project" type="java.lang.String"/>
+        <con1:property propagates="true" key="ModelItem.rate" type="java.lang.Long">10</con1:property>
+        <con1:property propagates="true" key="ModelItem.loadDistributionType" type="com.smartbear.load.facade.LoadDistributionType">PerScenario</con1:property>
+        <con1:property propagates="true" key="ModelItem.remoteMode" type="java.lang.String"/>
+      </con1:properties>
+      <con1:attributes/>
+      <con1:addons/>
+      <con1:scene label="New Scenario" id="9cd4f1ea-e253-40ae-8707-72ec3e8e9dbb">
+        <con1:properties>
+          <con1:property propagates="true" key="ModelItem.description" type="java.lang.String"/>
+          <con1:property propagates="true" key="CanvasItem.abortOnFinish" type="java.lang.Boolean">false</con1:property>
+          <con1:property propagates="true" key="SceneItem.followProject" type="java.lang.Boolean">true</con1:property>
+          <con1:property propagates="true" key="SceneItem.scenarioRatePercentage" type="java.lang.Long">100</con1:property>
+          <con1:property propagates="true" key="SceneItem.scenarioRateSpecific" type="java.lang.Long">10</con1:property>
+          <con1:property propagates="true" key="ModelItem.samplerOutputLevel" type="com.eviware.loadui.api.component.SoapUISamplerOutputLevel">TestCaseAndAllTestSteps</con1:property>
+        </con1:properties>
+        <con1:attributes/>
+        <con1:addons/>
+        <con1:component type="com.eviware.loadui.impl.component.IntervalComponent" label="Interval 1" id="f08f3e0f-8ec2-416d-8f3f-8478dee04805" category="Scheduler">
+          <con1:properties>
+            <con1:property propagates="true" key="ModelItem.description" type="java.lang.String"/>
+            <con1:property propagates="true" key="stateProperty" type="java.lang.Boolean">true</con1:property>
+            <con1:property propagates="true" key="startAt" type="java.lang.Long">0</con1:property>
+            <con1:property propagates="true" key="duration" type="java.lang.Long">5</con1:property>
+            <con1:property propagates="true" key="unit" type="java.lang.String">Sec</con1:property>
+            <con1:property propagates="true" key="mode" type="java.lang.String">Single</con1:property>
+            <con1:property propagates="true" key="defaultMode" type="java.lang.Boolean">true</con1:property>
+          </con1:properties>
+          <con1:attributes>
+            <con1:property key="com.eviware.loadui.api.model.ComponentItem@type">Interval</con1:property>
+          </con1:attributes>
+          <con1:addons/>
+        </con1:component>
+        <con1:component type="com.eviware.loadui.impl.component.generators.FixedVU" label="Fixed Load 1" id="81c53d6b-7d36-467a-be44-6a09afddb583" category="Generators">
+          <con1:properties>
+            <con1:property propagates="true" key="ModelItem.description" type="java.lang.String"/>
+            <con1:property propagates="true" key="stateProperty" type="java.lang.Boolean">true</con1:property>
+            <con1:property propagates="true" key="limitVU" type="java.lang.Long">9223372036854775807</con1:property>
+            <con1:property propagates="true" key="load" type="java.lang.Long">5</con1:property>
+            <con1:property propagates="true" key="interval" type="java.lang.Long">1000</con1:property>
+          </con1:properties>
+          <con1:attributes>
+            <con1:property key="com.eviware.loadui.api.model.ComponentItem@type">Fixed Load</con1:property>
+          </con1:attributes>
+          <con1:addons/>
+        </con1:component>
+        <con1:component type="com.eviware.loadui.components.soapui.SoapUISamplerComponent" label="Build - Tester:Advanced assertion and data drive" id="6091dd23-3133-4ae3-a885-5339f371a4c4" category="Runners">
+          <con1:properties>
+            <con1:property propagates="true" key="ModelItem.description" type="java.lang.String"/>
+            <con1:property propagates="true" key="concurrentSamples" type="java.lang.Long">1000</con1:property>
+            <con1:property propagates="true" key="property_name_is_not_relevant_for_private_property" type="java.lang.Long">9223372036854775807</con1:property>
+            <con1:property propagates="true" key="maxQueueSize" type="java.lang.Long">1000</con1:property>
+            <con1:property propagates="true" key="countDiscarded" type="java.lang.Boolean">false</con1:property>
+            <con1:property propagates="true" key="disabledTestSteps" type="java.lang.String"/>
+            <con1:property propagates="true" key="_thinkTime" type="java.lang.Long">0</con1:property>
+            <con1:property propagates="true" key="ReadyApiTestCase" type="com.eviware.soapui.impl.wsdl.testcase.WsdlTestCase">ef1b3d40-1b2e-4cb2-8a4f-50f8242b05fe</con1:property>
+            <con1:property propagates="true" key="raiseError" type="java.lang.Boolean">true</con1:property>
+            <con1:property propagates="true" key="outputTestCaseProperties" type="java.lang.Boolean">true</con1:property>
+            <con1:property propagates="true" key="OutputLevel" type="java.lang.String">TestCase only</con1:property>
+            <con1:property propagates="true" key="closeConnectionsAfterRequest" type="java.lang.Boolean">false</con1:property>
+            <con1:property propagates="true" key="disableSoapuiAssertions" type="java.lang.Boolean">false</con1:property>
+            <con1:property propagates="true" key="forceShareDatasources" type="java.lang.Boolean">true</con1:property>
+          </con1:properties>
+          <con1:attributes>
+            <con1:property key="com.eviware.loadui.api.model.ComponentItem@type">Ready API TestCase Runner</con1:property>
+          </con1:attributes>
+          <con1:addons/>
+        </con1:component>
+        <con1:connection outputTerminalId="f08f3e0f-8ec2-416d-8f3f-8478dee04805/outgoingTerminal" inputTerminalId="81c53d6b-7d36-467a-be44-6a09afddb583/stateTerminal"/>
+        <con1:connection outputTerminalId="81c53d6b-7d36-467a-be44-6a09afddb583/triggerTerminal" inputTerminalId="6091dd23-3133-4ae3-a885-5339f371a4c4/triggerTerminal"/>
+        <con1:connection outputTerminalId="6091dd23-3133-4ae3-a885-5339f371a4c4/runningTerminal" inputTerminalId="81c53d6b-7d36-467a-be44-6a09afddb583/Sample Count"/>
+      </con1:scene>
+      <con1:statistics>
+        <con1:page title="DefaultLoadUIStatisticPage">
+          <con1:chartGroup type="com.eviware.loadui.api.statistics.model.chart.line.LineChartView" title="" groupType="Monitors">
+            <con1:attributes>
+              <con1:property key="GroupId">93077bd7-ef95-4cb6-a959-71a515a4af69</con1:property>
+            </con1:attributes>
+          </con1:chartGroup>
+        </con1:page>
+      </con1:statistics>
+    </con1:loadui-project>
+    <con:loadUITestScenario projectId="d7a7c5fa-7604-4183-8f55-25aa6b47f26b" scenarioId="9cd4f1ea-e253-40ae-8707-72ec3e8e9dbb" name="New Scenario" id="281d7d46-741c-4af7-b32a-af0149587d8c">
+      <con:settings/>
+    </con:loadUITestScenario>
+    <con:loadUIPanelData id="a9feac66-eaec-4a59-91e4-24773532738c">
+      <con:panel>Log</con:panel>
+    </con:loadUIPanelData>
+    <con:reportParameters/>
+  </con:loadUiTest>
+  <con:tags/>
+</con:soapui-project>
