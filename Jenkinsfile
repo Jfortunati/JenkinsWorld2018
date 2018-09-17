@@ -45,6 +45,19 @@ pipeline {
 
       }
     }
+    stage('Load Testing') {
+      parallel {
+        stage('Load UI') {
+          steps {
+            bat 'depoloy_script'
+          }
+        }
+        stage('LoadComplete') {
+          steps {
+            bat 'alert_site.bat'
+          }
+        }
+      }
     stage('Deploy') {
       parallel {
         stage('Deploy') {
