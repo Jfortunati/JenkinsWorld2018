@@ -42,9 +42,10 @@ pipeline {
         waitUntil() {
           bat 'collaborator'
         }
+
       }
     }
-    stage('Load Testing') {
+    stage('Scalability Testing') {
       parallel {
         stage('Load UI') {
           steps {
@@ -56,8 +57,13 @@ pipeline {
             bat 'alert_site.bat'
           }
         }
+        stage('CrossBrowserTesting Automation') {
+          steps {
+            bat 'cbt.bat'
+          }
+        }
       }
-	 }
+    }
     stage('Deploy') {
       parallel {
         stage('Deploy') {
@@ -65,16 +71,16 @@ pipeline {
             bat 'depoloy_script'
           }
         }
-        stage('AlertSite Monitors') {
-          steps {
-            bat 'alert_site.bat'
-          }
-        }
         stage('Update Swagger Spec') {
           steps {
             bat 'swagger_spec.bat'
           }
         }
+      }
+    }
+    stage('Monitor') {
+      steps {
+        bat 'AlertSite Monitors'
       }
     }
   }
