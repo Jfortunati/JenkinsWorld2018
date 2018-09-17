@@ -1,6 +1,7 @@
 pipeline {
   agent {
     node {
+      customWorkspace 'C:\\Jenkins-Workspaces\\jenkins-world-2018'
       label 'ESXI-AL-CI'
     }
 
@@ -13,18 +14,18 @@ pipeline {
     }
     stage('Regression') {
       parallel {
-        stage('API Service Testing') {
+        stage('SoapUI Tests') {
           steps {
             SoapUIPro(pathToTestrunner: 'test', pathToProjectFile: 'test', testSuite: 'test', testCase: 'test', projectPassword: 'test', environment: 'test')
           }
         }
-        stage('TestComplete') {
+        stage('TestComplete Tests') {
           steps {
             bat 'test_complete.bat'
             bat 'selenium_scripts.bat'
           }
         }
-        stage('Selenium') {
+        stage('Legacy Selenium') {
           steps {
             bat 'myscripts.bat'
           }
