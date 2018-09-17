@@ -4,19 +4,18 @@ pipeline {
       customWorkspace 'C:\\Jenkins-Workspaces\\jenkins-world-2018'
       label 'ESXI-AL-CI'
     }
-
   }
   stages {
     stage('Build & Setup') {
       parallel {
         stage('Send to Staging') {
           steps {
-            bat 'depoloy_script'
+             bat(returnStdout: true, script: '.\\staging.bat')
           }
         }
         stage('Start Virtual Services') {
           steps {
-            bat 'alert_site.bat'
+             bat(returnStdout: true, script: '.\\start-virt-serv.bat')
           }
         }
       }
@@ -24,7 +23,7 @@ pipeline {
     stage('Unit Tests') {
       steps {
         waitUntil() {
-          bat 'collaborator'
+          bat(returnStdout: true, script: '.\\unit-tests.bat')
         }
 
       }
@@ -38,26 +37,25 @@ pipeline {
         }
         stage('TestComplete Tests') {
           steps {
-            bat 'test_complete.bat'
-            bat 'selenium_scripts.bat'
+            bat(returnStdout: true, script: '.\\test-complete.bat')
           }
         }
         stage('Legacy Selenium') {
           steps {
-            bat 'myscripts.bat'
+            bat(returnStdout: true, script: '.\\selenium.bat')
           }
         }
       }
     }
     stage('BDD Scenarios') {
       steps {
-        bat 'testcomplete'
+        bat(returnStdout: true, script: '.\\bdd.bat')
       }
     }
     stage('Peer Review') {
       steps {
         waitUntil() {
-          bat 'collaborator'
+          bat(returnStdout: true, script: '.\\collaborator.bat')
         }
 
       }
@@ -66,17 +64,17 @@ pipeline {
       parallel {
         stage('Load UI') {
           steps {
-            bat 'depoloy_script'
+            bat(returnStdout: true, script: '.\\loadui.bat')
           }
         }
         stage('LoadComplete') {
           steps {
-            bat 'alert_site.bat'
+            bat(returnStdout: true, script: '.\\loadcomplete.bat')
           }
         }
         stage('CrossBrowserTesting Automation') {
           steps {
-            bat 'cbt.bat'
+            bat(returnStdout: true, script: '.\\cbt.bat')
           }
         }
       }
@@ -85,34 +83,34 @@ pipeline {
       parallel {
         stage('Stop Virtual Services') {
           steps {
-            bat 'depoloy_script'
+            bat(returnStdout: true, script: '.\\stop-virt-serv.bat')
           }
         }
         stage('Merge PR') {
           steps {
-            bat 'depoloy_script'
+            bat(returnStdout: true, script: '.\\merge.bat')
           }
         }
         stage('Update Swagger Spec') {
           steps {
-            bat 'swagger_spec.bat'
+            bat(returnStdout: true, script: '.\\swagger.bat')
           }
         }
         stage('Update Jira') {
           steps {
-            bat 'swagger_spec.bat'
+            bat(returnStdout: true, script: '.\\jira.bat')
           }
         }
         stage('Send to Prod') {
           steps {
-            bat 'swagger_spec.bat'
+            bat(returnStdout: true, script: '.\\prod.bat')
           }
         }
       }
     }
     stage('Monitor') {
       steps {
-        bat 'AlertSite Monitors'
+        bat(returnStdout: true, script: '.\\alertsite.bat')
       }
     }
   }
