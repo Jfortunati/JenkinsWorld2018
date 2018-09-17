@@ -4,18 +4,19 @@ pipeline {
       customWorkspace 'C:\\Jenkins-Workspaces\\jenkins-world-2018'
       label 'ESXI-AL-CI'
     }
+
   }
   stages {
     stage('Build & Setup') {
       parallel {
         stage('Send to Staging') {
           steps {
-             bat(returnStdout: true, script: '.\\staging.bat')
+            bat(returnStdout: true, script: '.\\staging.bat')
           }
         }
         stage('Start Virtual Services') {
           steps {
-             bat(returnStdout: true, script: '.\\start-virt-serv.bat')
+            bat(returnStdout: true, script: '.\\start-virt-serv.bat')
           }
         }
       }
