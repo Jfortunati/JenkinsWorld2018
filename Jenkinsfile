@@ -7,18 +7,14 @@ pipeline {
 
   }
   stages {
-    stage('Build & Setup') {
-      parallel {
-        stage('Send to Staging') {
-          steps {
-            bat(returnStdout: true, script: '.\\staging.bat')
-          }
-        }
-        stage('Start Virtual Services') {
-          steps {
-            bat(returnStdout: true, script: '.\\start-virt-serv.bat')
-          }
-        }
+    stage('Deploy to Staging') {
+      steps {
+        bat(script: '.\\collaborator.bat', returnStdout: true)
+      }
+    }
+    stage('Start Virtual Services') {
+      steps {
+        bat(script: '.\\collaborator.bat', returnStdout: true)
       }
     }
     stage('Unit Tests') {
@@ -26,6 +22,7 @@ pipeline {
         bat(script: '.\\unit-tests.bat', returnStdout: true)
       }
     }
+	
     stage('API') {
       parallel {
         stage('SoapUI Tests') {
