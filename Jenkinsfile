@@ -4,6 +4,7 @@ pipeline {
       customWorkspace 'C:\\Jenkins-Workspaces\\jenkins-world-2018'
       label 'ESXI-AL-CI'
     }
+
   }
   stages {
     stage('Build & Setup') {
@@ -20,11 +21,12 @@ pipeline {
         }
       }
     }
-	stage('Unit Tests') {
+    stage('Unit Tests') {
       steps {
         waitUntil() {
           bat 'collaborator'
         }
+
       }
     }
     stage('Regression') {
@@ -57,6 +59,7 @@ pipeline {
         waitUntil() {
           bat 'collaborator'
         }
+
       }
     }
     stage('Scalability Testing') {
@@ -80,7 +83,7 @@ pipeline {
     }
     stage('Deploy') {
       parallel {
-	    stage('Stop Virtual Services') {
+        stage('Stop Virtual Services') {
           steps {
             bat 'depoloy_script'
           }
@@ -100,7 +103,7 @@ pipeline {
             bat 'swagger_spec.bat'
           }
         }
-		stage('Send to Prod') {
+        stage('Send to Prod') {
           steps {
             bat 'swagger_spec.bat'
           }
