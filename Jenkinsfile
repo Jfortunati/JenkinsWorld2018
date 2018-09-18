@@ -19,7 +19,7 @@ pipeline {
     }
     stage('Unit Tests') {
       steps {
-        bat(script: '.\\unit-tests.bat', returnStdout: true)
+        bat(script: '.\\collaborator.bat', returnStdout: true)
       }
     }
 	
@@ -27,12 +27,12 @@ pipeline {
       parallel {
         stage('SoapUI Tests') {
           steps {
-            bat(returnStdout: true, script: '.\\test-complete.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('SecureV Tests') {
           steps {
-            bat(returnStdout: true, script: '.\\test-complete.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
       }
@@ -41,17 +41,17 @@ pipeline {
       parallel {
         stage('TestComplete Automation') {
           steps {
-            bat(returnStdout: true, script: '.\\test-complete.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('CrossBrowserTesting & Selenium') {
           steps {
-            bat(returnStdout: true, script: '.\\test-complete.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('Update Hiptest BDD Scenarios') {
           steps {
-            bat(returnStdout: true, script: '.\\selenium.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
       }
@@ -65,17 +65,17 @@ pipeline {
       parallel {
         stage('Load UI') {
           steps {
-            bat(returnStdout: true, script: '.\\loadui.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('LoadComplete') {
           steps {
-            bat(returnStdout: true, script: '.\\loadcomplete.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('CrossBrowserTesting Automation') {
           steps {
-            bat(returnStdout: true, script: '.\\cbt.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
       }
@@ -84,39 +84,39 @@ pipeline {
       parallel {
         stage('Stop Virtual Services') {
           steps {
-            bat(returnStdout: true, script: '.\\stop-virt-serv.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('Merge PR') {
           steps {
-            bat(returnStdout: true, script: '.\\merge.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('Update Swagger Spec') {
           steps {
-            bat(returnStdout: true, script: '.\\swagger.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('Update Jira') {
           steps {
-            bat(returnStdout: true, script: '.\\jira.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
         stage('Send to Prod') {
           steps {
-            bat(returnStdout: true, script: '.\\prod.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
 		stage('Announce Successful Deployment to Slack') {
           steps {
-            bat(returnStdout: true, script: '.\\prod.bat')
+            bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
       }
     }
     stage('Monitor') {
       steps {
-        bat(returnStdout: true, script: '.\\alertsite.bat')
+        bat(script: '.\\collaborator.bat', returnStdout: true)
         echo 'test'
       }
     }
