@@ -107,7 +107,7 @@ pipeline {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
-		stage('Announce Successful Deployment to Slack') {
+		stage('Slack Message!') {
           steps {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
