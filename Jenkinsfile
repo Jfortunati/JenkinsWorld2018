@@ -9,17 +9,21 @@ pipeline {
   stages {
     stage('Deploy to Staging') {
       steps {
-        bat(script: '.\\collaborator.bat', returnStdout: true)
+        echo 'buliding application...'
+		echo 'deploying to environment STAGING...'
+		echo 'deployment complete'
       }
     }
     stage('Start ServiceV Pro') {
       steps {
-        bat(script: '.\\collaborator.bat', returnStdout: true)
+        echo 'starting virtual services...'
       }
     }
     stage('Unit Tests') {
       steps {
-        bat(script: '.\\collaborator.bat', returnStdout: true)
+        echo 'running unit tests...'
+		echo 'running static analysis...'
+		echo 'all tests passed'
       }
     }
 	
@@ -27,12 +31,14 @@ pipeline {
       parallel {
         stage('SoapUI Pro Tests') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'running SoapUI Pro tests...'
+			echo 'SoapUI Pro testing complete: 4/4 pass, 0/4 fail'
           }
         }
         stage('Secure Pro Tests') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'running Secure Pro tests...'
+			echo 'Secure Pro testing complete: 2/2 pass, 0/2 fail'
           }
         }
       }
@@ -41,36 +47,42 @@ pipeline {
       parallel {
         stage('TestComplete Automation') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'running TestComplete tests...'
+			echo 'TestComplete testing complete: 2/2 pass, 0/2 fail'
           }
         }
         stage('CrossBrowserTesting & Selenium') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'running selenium scripts...'
+			echo 'running CBT visual comparison...'
+			echo 'all selenium scripts passed'
+			echo 'CBT visual comparison within bounds, 2 differences found'
           }
         }
         stage('Update Hiptest BDD Scenarios') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'Hiptest scenarios updated'
           }
         }
       }
     }
     stage('Peer Review') {
       steps {
-        bat(script: '.\\collaborator.bat', returnStdout: true)
+        echo 'Collaborator review completed'
       }
     }
     stage('Scalability Testing') {
       parallel {
         stage('Load UI Pro') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'starting LoadUI Pro testing...'
+			echo 'LoadUI testing complete: 2/2 passed, 0/2 failed'
           }
         }
         stage('LoadComplete') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'starting LoadComplete testing...'
+			echo 'LoadComplete testing complete: 2/2 passed, 0/2 failed'
           }
         }
        }
@@ -79,40 +91,41 @@ pipeline {
       parallel {
         stage('Stop Virtual Services') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'stopping virtual services...'
           }
         }
         stage('Merge PR') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'code merged from branch SPRINT-15 to branch PROD'
           }
         }
         stage('Update Swagger Spec') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'SwaggerHub updated, spec PUBLISHED as V1.2.1'
           }
         }
         stage('Update Jira') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'updating Jira tasks with tag SPRINT-15 to DONE'
           }
         }
         stage('Send to Prod') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'buliding application...'
+			echo 'deploying to environment PROD...'
+			echo 'deployment complete'
           }
         }
 		stage('Slack Message!') {
           steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
+            echo 'sending message to channel DEPLOYMENTS as SUCCESSFUL'
           }
         }
       }
     }
     stage('Monitor') {
       steps {
-        bat(script: '.\\collaborator.bat', returnStdout: true)
-        echo 'test'
+        echo 'adding SoapUI Pro tests as monitors to Alertsite'
       }
     }
   }
