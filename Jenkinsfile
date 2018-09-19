@@ -12,7 +12,7 @@ pipeline {
         bat(script: '.\\collaborator.bat', returnStdout: true)
       }
     }
-    stage('Start Virtual Services') {
+    stage('Start ServiceV Pro') {
       steps {
         bat(script: '.\\collaborator.bat', returnStdout: true)
       }
@@ -25,12 +25,12 @@ pipeline {
 	
     stage('API') {
       parallel {
-        stage('SoapUI Tests') {
+        stage('SoapUI Pro Tests') {
           steps {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
-        stage('SecureV Tests') {
+        stage('Secure Pro Tests') {
           steps {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
@@ -63,7 +63,7 @@ pipeline {
     }
     stage('Scalability Testing') {
       parallel {
-        stage('Load UI') {
+        stage('Load UI Pro') {
           steps {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
@@ -73,12 +73,7 @@ pipeline {
             bat(script: '.\\collaborator.bat', returnStdout: true)
           }
         }
-        stage('CrossBrowserTesting Automation') {
-          steps {
-            bat(script: '.\\collaborator.bat', returnStdout: true)
-          }
-        }
-      }
+       }
     }
     stage('Deploy') {
       parallel {
